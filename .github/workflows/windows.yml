@@ -1,0 +1,34 @@
+name: Windows CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+# Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    # Submoudle
+    - name: Checkout Submodles
+      run: git submodule update --init --recursive
+    # Setup MSBuild For Later Usage
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+      with:
+        vs-version: '16.6.2'
+    # Run MSBuild
+    - name: Build Solution
+      run: msbuild "D:\a\DCDumper\DCDumper\DCDumper.sln" /verbosity:minimal /property:Configuration=Release  /property:Platform=x64
+    # Upload Artifact
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: DCDumper-dev
+        path: D:\a\DCDumper\DCDumper\x64\Release\bin\
