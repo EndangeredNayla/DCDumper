@@ -34,7 +34,7 @@ jobs:
         vs-version: '16.6.2'
     # Run MSBuild
     - name: Build Solution
-      run: msbuild "D:\a\DCDumper\DCDumper\DCDumper-MPN.sln" /verbosity:minimal /property:Configuration=Release  /property:Platform=x64
+      run: msbuild "D:\a\DCDumper\DCDumper\DCDumper.sln" /verbosity:minimal /property:Configuration=Release  /property:Platform=x64
     # Upload Artifact
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
